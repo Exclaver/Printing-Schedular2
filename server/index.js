@@ -17,7 +17,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(fileUpload());
 app.use(cors(
   {
-    origin:["https://printing-schedular.vercel.app"],
+    origin:["https://printing-schedular2.vercel.app"],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   }
