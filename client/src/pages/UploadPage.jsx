@@ -127,6 +127,7 @@ const Upload = () => {
         })
         .catch((error) => {
           console.error("Error uploading files:", error);
+          res.status(500).json({ error: error.toString() });
           setUploadError("Upload failed. Please try again.");
         });
     }
