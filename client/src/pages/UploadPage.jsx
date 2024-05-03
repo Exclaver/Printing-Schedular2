@@ -101,7 +101,7 @@ const Upload = () => {
     const files = Array.from(event.target.files);
     const validFiles = files.filter((file) => file.size <= 100 * 1024 * 1024);
     if (validFiles.length !== files.length) {
-      setUploadError("All files must be less than 100MB");
+      setUploadError("All files must be less than 100000MB");
     } else {
       setSelectedFiles(validFiles);
       setUploadError(null);
