@@ -2,7 +2,6 @@ import React, { useState, useRef } from "react";
 import axios from "axios";
 import { Config } from "../config";
 import { useNavigate } from "react-router-dom";
-import { Blob } from "@vercel/blob";
 const styles = {
   uploadContainer: {
     display: "flex",
@@ -109,52 +108,31 @@ const Upload = () => {
     }
   };
 
-  // const handleUpload = () => {
-  //   if (selectedFiles.length > 0 && username) {
-  //     const formData = new FormData();
-  //     selectedFiles.forEach((file, index) => {
-  //       formData.append(`file${index + 1}`, file);
-  //     });
-  //     formData.append("username", username);
-  //     formData.append("PrintType", PrintType);
-  //     axios
-  //       .post(`${Config.API_URL}/upload`, formData)
-  //       .then((response) => {
-  //         // Assuming your API returns an array of fileIds
-  //         const fileIds = response.data.fileIds;
-
-  //         // Navigate to the view/fileId page for the first file
-  //         history(`/view/${fileIds[0]}`);
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error uploading files:", error);
-  //         res.status(500).json({ error: error.toString() });
-  //         setUploadError("Upload failed. Please try again.");
-  //       });
-  //   }
-  // };
   const handleUpload = () => {
     if (selectedFiles.length > 0 && username) {
-      const responses = Promise.all(
-        selectedFiles.map(async (file, index) => {
-          const blob = new Blob([file], { type: file.type });
-          const formData = new FormData();
-          formData.append(`file${index + 1}`, blob);
-          formData.append("username", username);
-          formData.append("PrintType", PrintType);
-          return axios.post(`${Config.BLOB_URL}/upload`, formData);
+      const formData = new FormData();
+      selectedFiles.forEach((file, index) => {
+        formData.append(`file${index + 1}`, file);
+      });
+      formData.append("username", username);
+      formData.append("PrintType", PrintType);
+      axios
+        .post(`${Config.API_URL}/upload`, formData)
+        .then((response) => {
+          // Assuming your API returns an array of fileIds
+          const fileIds = response.data.fileIds;
+
+          // Navigate to the view/fileId page for the first file
+          history(`/view/${fileIds[0]}`);
         })
-      );
-
-      // Assuming your API returns an array of fileIds
-      const fileIds = responses.map((response) => response.data.fileId);
-
-      // Navigate to the view/fileId page for the first file
-      history(`/view/${fileIds[0]}`);
-    } else {
-      setUploadError("Upload failed. Please try again.");
+        .catch((error) => {
+          console.error("Error uploading files:", error);
+          res.status(500).json({ error: error.toString() });
+          setUploadError("Upload failed. Please try again.");
+        });
     }
   };
+
   const handleChooseFileClick = () => {
     inputFileRef.current.click();
   };

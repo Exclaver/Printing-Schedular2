@@ -1,8 +1,6 @@
 const express = require("express");
 const MediaFile = require("../modals/MediaFile"); // Assuming you have your MediaFile model defined
 const { Config } = require("../config");
-const fetch = require('node-fetch');
-const { Blob } = require('@vercel/blob');
 
 const UploadRoute = async (req, res) => {
   try {
@@ -16,20 +14,13 @@ const UploadRoute = async (req, res) => {
     // Loop over all files in req.files
     for (let fileKey in req.files) {
       const uploadedFile = req.files[fileKey];
-      
 
-      const blob = new Blob([uploadedFile.data], { type: uploadedFile.mimetype });
-      const response = await fetch(`${Config.BLOB_URL}/upload`, {
-        method: 'POST',
-        body: blob,
-      });
-      const blobResponse = await response.json();
-      // // Generate a unique filename
-      // const uniqueFileName = Date.now() + "-" + uploadedFile.name;
+      // Generate a unique filename
+      const uniqueFileName = Date.now() + "-" + uploadedFile.name;
 
-      // // Save the file to the /uploads folder
-      // const uploadPath = Config.BASE_DIR + "/uploads/" + uniqueFileName;
-      // await uploadedFile.mv(uploadPath);
+      // Save the file to the /uploads folder
+      const uploadPath = Config.BASE_DIR + "/uploads/" + uniqueFileName;
+      await uploadedFile.mv(uploadPath);
 
       // Save file information to the MediaFile model
       const mediaFile = new MediaFile({
