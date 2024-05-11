@@ -8,6 +8,7 @@ const Config = {
   CRYPTR_TOKEN: "fddffd",
   ADMIN_USER: "admin",
   ADMIN_PASS: "pass",
+  BLOB_URL:"vercel_blob_rw_tjHbzBFP5yyLekZ7_CFOoUY467sugVR83ZyzZQuwceeuBQL"
 };
 
 module.exports = {
