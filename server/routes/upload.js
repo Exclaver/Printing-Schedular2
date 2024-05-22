@@ -50,7 +50,7 @@
 
 
 const express = require("express");
-const MediaFile = require("../models/MediaFile"); // Ensure the path to your MediaFile model is correct
+const MediaFile = require("../modals/MediaFile"); // Ensure the path to your MediaFile model is correct
 const { Blob } = require("@vercel/blob");
 require('dotenv').config();
 
